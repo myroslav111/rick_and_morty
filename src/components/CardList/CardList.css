@@ -1,0 +1,13 @@
+.container__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  /* margin: -16px; */
+  /* margin-top: 55px; */
+  padding: 0;
+}
+.container__item {
+  margin: 15px;
+  list-style-type: none;
+}
