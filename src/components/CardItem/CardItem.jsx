@@ -44,8 +44,8 @@ export default function CardItem({
   return (
     <Card sx={{ maxWidth: 345, margin: 2 }}>
       <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+        <CardContent sx={{ padding: 1 }}>
+          <Typography variant="h6" component="div">
             {name}
           </Typography>
         </CardContent>
