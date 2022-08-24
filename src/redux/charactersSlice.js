@@ -18,12 +18,19 @@ export const charactersSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addMatcher(
-      rickAndMortyApi.endpoints.getCharacters.matchFulfilled,
-      (state, { payload }) => {
-        state.characters = [...state.characters, ...payload.results];
-      }
-    );
+    builder
+      .addMatcher(
+        rickAndMortyApi.endpoints.getCharacters.matchFulfilled,
+        (state, { payload }) => {
+          state.characters = [...state.characters, ...payload.results];
+        }
+      )
+      .addMatcher(
+        rickAndMortyApi.endpoints.getCharactersNextPage.matchFulfilled,
+        (state, { payload }) => {
+          state.characters = [...state.characters, ...payload.results];
+        }
+      );
   },
 });
 
