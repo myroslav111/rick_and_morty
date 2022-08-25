@@ -3,20 +3,69 @@ import { rickAndMortyApi } from './rtkQuery';
 
 const initialState = {
   characters: [],
+  filter: '',
 };
 
 export const charactersSlice = createSlice({
   name: 'character',
   initialState,
   reducers: {
-    increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    sortByEpisode: state => {
+      state.characters = [
+        ...state.characters.sort(
+          (character, characterNext) =>
+            characterNext.episode.reduce((acc, ep) => {
+              return acc + ep.length;
+            }, 0) -
+            character.episode.reduce((acc, ep) => {
+              return acc + ep.length;
+            }, 0)
+        ),
+      ];
+    },
+    sortByEpisodeDown: state => {
+      state.characters = [
+        ...state.characters.sort(
+          (character, characterNext) =>
+            character.episode.reduce((acc, ep) => {
+              return acc + ep.length;
+            }, 0) -
+            characterNext.episode.reduce((acc, ep) => {
+              return acc + ep.length;
+            }, 0)
+        ),
+      ];
+    },
+    sortByDate: state => {
+      state.characters = [
+        ...state.characters.sort(
+          (current, next) =>
+            Date.parse(current.created) - Date.parse(next.created)
+        ),
+      ];
+    },
+    sortByDateDown: state => {
+      state.characters = [
+        ...state.characters.sort(
+          (current, next) =>
+            Date.parse(next.created) - Date.parse(current.created)
+        ),
+      ];
+    },
+    // filterByName: (state, { payload }) => {
+    //   state.characters = [
+    //     ...state.characters.filter(name =>
+    //       name.name.toLowerCase().includes(payload.toLowerCase())
+    //     ),
+    //   ];
+    // },
+    filterByName: (state, { payload }) => {
+      // state.characters = [...state.characters];
+      // state.filter = payload;
+      return { ...state, filter: payload };
     },
   },
+
   extraReducers: builder => {
     builder
       .addMatcher(
@@ -35,9 +84,20 @@ export const charactersSlice = createSlice({
 });
 
 export const getCharacters = state => state.characterReducer.characters;
+export const getFilterValue = state => state.characterReducer.filter;
+export const nameOfCharacter = state =>
+  state.characterReducer.characters.map(name => name.name);
 // export const getDataItem = (state) => state.items;
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } =
-  charactersSlice.actions;
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  sortByEpisode,
+  sortByDate,
+  sortByEpisodeDown,
+  sortByDateDown,
+  filterByName,
+} = charactersSlice.actions;
 
 export default charactersSlice.reducer;

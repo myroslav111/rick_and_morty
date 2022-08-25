@@ -14,6 +14,7 @@ export default function CardItem({
   location,
   created,
   episode,
+  id,
 }) {
   const [visible, setVisible] = useState(false);
   const dataCreate = created.slice(0, 10);

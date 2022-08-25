@@ -6,8 +6,8 @@ import CardList from 'components/CardList';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useGetCharactersNextPageQuery } from '../../redux/rtkQuery';
-// import { useSelector } from 'react-redux';
-// import { getCharacters } from '../../redux/charactersSlice';
+import { useSelector } from 'react-redux';
+import { getFilterValue } from '../../redux/charactersSlice';
 // import { useState, createContext, useEffect } from 'react';
 
 // import api from '../../service/api';
@@ -18,6 +18,7 @@ const ContainerContent = () => {
   // const [items, setItems] = useState([]);
   const [nextPage, setNextPage] = useState(1);
   const { isLoading, isFetching } = useGetCharactersNextPageQuery(nextPage);
+  const bool = useSelector(getFilterValue);
   // const { isLoading } = useGetCharactersQuery();
   const handleClick = () => {
     setNextPage(prevState => prevState + 1);
@@ -64,9 +65,15 @@ const ContainerContent = () => {
           }}
         >
           <CardList isFetching={isFetching} />
-          <Button className="Button" variant="contained" onClick={handleClick}>
-            fetch
-          </Button>
+          {bool ? null : (
+            <Button
+              className="Button"
+              variant="contained"
+              onClick={handleClick}
+            >
+              fetch
+            </Button>
+          )}
         </Box>
       </Container>
       {/* </Context.Provider> */}
