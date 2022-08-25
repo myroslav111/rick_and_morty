@@ -10,10 +10,13 @@ import {
   sortByDate,
   sortByEpisodeDown,
   sortByDateDown,
+  reset,
 } from 'redux/charactersSlice';
+import { useGetCharactersQuery } from 'redux/rtkQuery';
 
 export default function BasicSelect() {
   const [sort, setSort] = useState('');
+  const { data } = useGetCharactersQuery();
   const dispatch = useDispatch();
   const handleChange = event => {
     setSort(event.target.value);
@@ -23,20 +26,29 @@ export default function BasicSelect() {
     switch (sort) {
       case 'ep':
         dispatch(sortByEpisode());
+        setSort(sort);
         return;
       case 'ep-down':
         dispatch(sortByEpisodeDown());
+        setSort(sort);
         return;
       case 'date':
         dispatch(sortByDate());
+        setSort(sort);
         return;
       case 'date-down':
         dispatch(sortByDateDown());
+        setSort(sort);
+        return;
+      case 'reset':
+        // useGetCharactersQuery()
+        dispatch(reset(data));
+        setSort('');
         return;
       default:
-        console.log('some hapend');
+      // console.log('some hapend');
     }
-  }, [sort, dispatch]);
+  }, [sort, data, dispatch]);
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -53,6 +65,7 @@ export default function BasicSelect() {
           <MenuItem value={'date-down'}>By date: &darr;</MenuItem>
           <MenuItem value={'ep'}>By number of episodes: &uarr;</MenuItem>
           <MenuItem value={'ep-down'}>By number of episodes: &darr;</MenuItem>
+          <MenuItem value={'reset'}>Reset</MenuItem>
         </Select>
       </FormControl>
     </Box>

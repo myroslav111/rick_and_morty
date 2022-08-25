@@ -56,23 +56,22 @@ export const charactersSlice = createSlice({
       return { ...state, filter: payload };
     },
     removeCard: (state, { payload }) => {
-      // return {
-      //   ...state.characters.filter(character => character.id !== payload),
-      //   filter: state.filter,
-      // };
       state.characters = [
         ...state.characters.filter(character => character.id !== payload),
       ];
+    },
+    reset: (state, { payload }) => {
+      state.characters = [...payload.results];
     },
   },
 
   extraReducers: builder => {
     builder
       .addMatcher(
-        rickAndMortyApi.endpoints.getCharacters.matchFulfilled,
-        (state, { payload }) => {
-          state.characters = [...state.characters, ...payload.results];
-        }
+        rickAndMortyApi.endpoints.getCharacters.matchFulfilled
+        // (state, { payload }) => {
+        //   state.characters = [...payload.results];
+        // }
       )
       .addMatcher(
         rickAndMortyApi.endpoints.getCharactersNextPage.matchFulfilled,
@@ -99,6 +98,7 @@ export const {
   sortByDateDown,
   filterByName,
   removeCard,
+  reset,
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;

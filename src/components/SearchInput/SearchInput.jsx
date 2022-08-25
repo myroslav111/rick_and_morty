@@ -23,7 +23,7 @@ const SearchInput = () => {
   return (
     <div>
       {' '}
-      <Stack spacing={2} sx={{ width: 300 }}>
+      <Stack spacing={2} sx={{ minWidth: 200 }}>
         <Autocomplete
           label="Sort"
           onChange={handleChangeOption}
