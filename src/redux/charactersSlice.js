@@ -52,17 +52,17 @@ export const charactersSlice = createSlice({
         ),
       ];
     },
-    // filterByName: (state, { payload }) => {
-    //   state.characters = [
-    //     ...state.characters.filter(name =>
-    //       name.name.toLowerCase().includes(payload.toLowerCase())
-    //     ),
-    //   ];
-    // },
     filterByName: (state, { payload }) => {
-      // state.characters = [...state.characters];
-      // state.filter = payload;
       return { ...state, filter: payload };
+    },
+    removeCard: (state, { payload }) => {
+      // return {
+      //   ...state.characters.filter(character => character.id !== payload),
+      //   filter: state.filter,
+      // };
+      state.characters = [
+        ...state.characters.filter(character => character.id !== payload),
+      ];
     },
   },
 
@@ -98,6 +98,7 @@ export const {
   sortByEpisodeDown,
   sortByDateDown,
   filterByName,
+  removeCard,
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;

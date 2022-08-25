@@ -5,6 +5,11 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useState } from 'react';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch } from 'react-redux';
+import { removeCard } from 'redux/charactersSlice';
 import './CardItem.css';
 
 export default function CardItem({
@@ -18,6 +23,7 @@ export default function CardItem({
 }) {
   const [visible, setVisible] = useState(false);
   const dataCreate = created.slice(0, 10);
+  const dispatch = useDispatch();
 
   const episodes = arr => {
     const shortStr = arr.map(str => {
@@ -42,13 +48,31 @@ export default function CardItem({
 
   const episod = episodes(episode);
 
+  // const handleClick = () => {};
+
   return (
     <Card sx={{ maxWidth: 345, margin: 2 }}>
-      <CardActionArea>
-        <CardContent sx={{ padding: 1 }}>
+      <CardActionArea component="div">
+        <CardContent
+          sx={{
+            padding: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Typography variant="h6" component="div">
             {name}
           </Typography>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <IconButton
+              onClick={() => dispatch(removeCard(id))}
+              aria-label="delete"
+              size="large"
+            >
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+          </Stack>
         </CardContent>
         <CardMedia
           component="img"

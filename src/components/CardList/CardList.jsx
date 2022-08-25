@@ -13,25 +13,11 @@ export default function CardList() {
   const characters = useSelector(getCharacters);
   const getFilterValueFromState = useSelector(getFilterValue);
 
-  // const { data, isLoading } = useGetCharactersQuery();
-  // const characters = data?.results;
-
   const getVisibleContact = (allCharacters, filterVal) => {
-    // const unic = allCharacters
-    //   .map(el => el.name)
-    //   .filter((name, index, array) => array.indexOf(name) === index);
-    // const srs = allCharacters.filter(name => name.name);
-    // console.log(unic);
     const normalizeFilter = filterVal.toLowerCase();
     return allCharacters.filter(character =>
       character.name.toLowerCase().includes(normalizeFilter)
     );
-    // return unic.filter(character =>
-    //   character.name.toLowerCase().includes(normalizeFilter)
-    // );
-    // } else {
-    //   return characters;
-    // }
   };
 
   const filteredCharacters = getVisibleContact(
